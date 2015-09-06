@@ -1,13 +1,23 @@
 var express = require('express');
+var React = require('react/addons');
 var router = express.Router();
-var maps = require('./controllers/maps');
+var components = require('../public/components.jsx')
 var client = require('node-rest-client').Client;
 
-client = new Client();
+var HelloMessage = React.createFactory(components.HelloMessage);
 
-// test route to make sure everything is working (accessed at GET http://localhost:8080/api)
-router.get('/', function(req, res) {
-    res.json({ message: 'hooray! welcome to our api!' });
+router.get('/', function(req, res){
+    console.log('test');
+    res.render('index', {
+    react: React.renderToString(HelloMessage({name: "John"}))
+    })
+});
+
+router.get('/name/', function(req, res){
+    var name = req.query.name
+    res.render('index', {
+    react: React.renderToString(HelloMessage({name: name}))
+    })
 });
 
 router.get('/map', function(req, res) {
@@ -17,7 +27,7 @@ router.get('/map', function(req, res) {
     var waypoints = ["Barossa Valley, SA", "Clare, SA", "Connawarra, SA", "McLaren Vale, SA"];
     var optimize = true;
 
-    
+
 
     res.json(body);
 });

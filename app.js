@@ -3,28 +3,14 @@ require('node-jsx').install({extension: '.jsx'});
 var express = require('express')
     , app = express()
     , React = require('react/addons')
-    , components = require('./public/components.jsx');
-    
-var HelloMessage = React.createFactory(components.HelloMessage);
+    , routes = require('./routes/index');
 
 app.engine('jade', require('jade').__express);
 app.set('view engine', 'jade');
 
 app.use(express.static(__dirname + '/public'));
 
-app.get('/', function(req, res){
-    console.log('test');
-    res.render('index', {
-    react: React.renderToString(HelloMessage({name: "John"}))
-    })
-});
-
-app.get('/name/', function(req, res){
-    var name = req.query.name
-    res.render('index', {
-    react: React.renderToString(HelloMessage({name: name}))
-    })
-});
+app.use('/', routes);
 
 var server = app.listen(8080, '0.0.0.0');
 server.on('listening', function () {
