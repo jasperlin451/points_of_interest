@@ -1,5 +1,4 @@
-var isNode = typeof module !== 'undefined' && module.exports
-    , React = isNode ? require('react/addons') : window.React
+var React = require('react/addons')
 
 var HelloMessage = React.createClass({
     handleClick: function () {
@@ -10,10 +9,4 @@ var HelloMessage = React.createClass({
         return <div onClick={this.handleClick}>Hello {this.props.name}</div>
     }
   });
-
-  if (isNode) {
-        exports.HelloMessage = HelloMessage
-  }
-  else {
-        React.render(<HelloMessage name="John" />, document.getElementById('react-root'))
-  }
+exports.HelloMessage = HelloMessage;

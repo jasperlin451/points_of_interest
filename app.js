@@ -13,8 +13,16 @@ app.set('view engine', 'jade');
 app.use(express.static(__dirname + '/public'));
 
 app.get('/', function(req, res){
+    console.log('test');
     res.render('index', {
     react: React.renderToString(HelloMessage({name: "John"}))
+    })
+});
+
+app.get('/name/', function(req, res){
+    var name = req.query.name
+    res.render('index', {
+    react: React.renderToString(HelloMessage({name: name}))
     })
 });
 
